@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: excel-service
+  datasource:
+    url: jdbc:oracle:thin:@127.0.0.1:1521/HZC_DATA
+    username: HZC_DATA
+    password: HZC_DATA
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  port: 8080
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
