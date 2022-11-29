@@ -20,6 +20,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExcelField {
 
+    /**
+     * 对应列索引
+     */
+    int index() default 0;
 
     /**
      * 字段值

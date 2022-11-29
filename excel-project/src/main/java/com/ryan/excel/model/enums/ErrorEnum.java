@@ -3,6 +3,8 @@
  */
 package com.ryan.excel.model.enums;
 
+import com.ryan.excel.exception.CommonException;
+
 /**
  * <P><B>Description: </B>TODO 添加描述</P>
  * Revision Trail: (Date/Author/Description)
@@ -12,6 +14,10 @@ package com.ryan.excel.model.enums;
  * @version 1.0
  */
 public enum ErrorEnum {
+
+    WRITE_FILE_ERROR("ERROR-0007", "write file error."),
+
+    MKDIR_ERROR("ERROR-0006", "mkdir error."),
 
     EXCEL_TEMPLATE_ERROR("ERROR-0005", "Excel template error."),
 

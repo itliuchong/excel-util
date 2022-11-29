@@ -30,6 +30,7 @@ import java.lang.reflect.Modifier;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -99,40 +100,7 @@ public class ImportUtil {
         return val;
     }
 
-    /**
-     * 获取ExcelField注解的方法或字段
-     */
-    public List<Object[]> getAnnotationList(Class<?> cls){
-        ArrayList<Object[]> annotationList = new ArrayList<>();
-        //字段
-        annotationList.addAll(getAnnotationList(cls.getDeclaredFields()));
-        //方法
-        annotationList.addAll(getAnnotationList(cls.getDeclaredMethods()));
-        return annotationList;
-    }
 
-
-
-    /**
-     * 获取ExcelField注解的方法或字段
-     */
-    public List<Object[]> getAnnotationList(Object[] objects){
-        List<Object[]> annotationList = new ArrayList<>();
-        for (Object object : objects) {
-            ExcelField excelField;
-            if(object instanceof Field){
-                excelField = ((Field) object).getAnnotation(ExcelField.class);
-            }else if(object instanceof Method){
-                excelField = ((Method) object).getAnnotation(ExcelField.class);
-            }else{
-                throw new CommonException(ErrorEnum.FILE_NOT_EXIST.getCode(), ErrorEnum.FILE_NOT_EXIST.getErrorMessage());
-            }
-            if(excelField != null && (excelField.type() == 0 || excelField.type() == 1)){
-                annotationList.add(new Object[]{excelField, object});
-            }
-        }
-        return annotationList;
-    }
 
     /**
      * 获取ExcelField注解中 字段的修饰类型 或 方法的返回类型
@@ -253,7 +221,7 @@ public class ImportUtil {
      * @return 结果
      */
     public <E> List<E> getDataListAndValidHead(Class<E> cls) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        List<Object[]> annotationList = getAnnotationList(cls.getDeclaredFields());
+        List<Object[]> annotationList = BaseUtil.getAnnotationList(cls.getDeclaredFields());
         for (int i = 0; i < headNum + 1; i++) {
             Row row = this.getRow(i);
             int column = 0;
@@ -278,7 +246,7 @@ public class ImportUtil {
      * @return 结果
      */
     public <E> List<E> getDataList(Class<E> cls) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        List<Object[]> annotationList = getAnnotationList(cls);
+        List<Object[]> annotationList = BaseUtil.getAnnotationList(cls);
         List<E> dataList = new ArrayList<>();
         for (int i = this.getHeadNum() + 1; i < this.getLastRowNum() + 1; i++) {
             //利用反射创造自定义对象
