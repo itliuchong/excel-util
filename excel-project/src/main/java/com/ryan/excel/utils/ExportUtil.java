@@ -78,7 +78,7 @@ public class ExportUtil {
                 }
             }
         }
-        return FileUtil.writeExcelFile(fileName, workbook);
+        return FileUtil.writeExcelFile(fileName, null, workbook);
     }
 
     /**

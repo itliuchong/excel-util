@@ -4,6 +4,7 @@
 package com.ryan.excel.utils;
 
 import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.ryan.excel.exception.CommonException;
 import com.ryan.excel.model.enums.ErrorEnum;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -35,6 +36,8 @@ public class FileUtil {
      */
     public static final String FILE_PATH_FORMAT = "yyyyMMddHHmmss";
 
+    public static final String SYSTEM = "system";
+
     /**
      * 创建FileItem对象
      * Revision Trail: (Date/Author/Description)
@@ -65,11 +68,15 @@ public class FileUtil {
     /**
      * 将excel数据写入文件
      * @param fileName 文件名
+     * @param user 用户
      * @param workbook 工作簿
      * @return 结果
      */
-    public static File writeExcelFile(String fileName, SXSSFWorkbook workbook){
-        String folderPath = FILE_DOWN_STORAGE_PATH + File.separator + DateUtil.format(new Date(), FILE_PATH_FORMAT) + File.separator;
+    public static File writeExcelFile(String fileName, String user, SXSSFWorkbook workbook){
+        if(StringUtils.isBlank(user)){
+            user = SYSTEM;
+        }
+        String folderPath = FILE_DOWN_STORAGE_PATH + File.separator + user + File.separator + DateUtil.format(new Date(), FILE_PATH_FORMAT) + File.separator;
         String filePath = folderPath + fileName;
         File folder = new File(folderPath);
         //创建文件夹
